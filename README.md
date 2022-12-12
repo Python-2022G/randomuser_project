@@ -23,3 +23,4 @@ methods:
 - get_user_with_year(year)
 - get_user_with_month(month)
 - get_user_with_day(day)
+- get_user_with_weekday(weekday)
