@@ -1,9 +1,9 @@
 import requests
 import datetime
-
+from datetime import datetime
 class RandomUser:
     def __init__(self, url: str) -> None:
-        self.url - url
+        self.url = url
 
     def get_user_with_year(self, year: int) -> dict:
         '''return user with year
@@ -14,7 +14,16 @@ class RandomUser:
         Returns:   
             dict: user
         '''
-        pass
+        while True:
+            response = requests.get(self.url)
+            if response.status_code == 200:
+                user = response.json()['results'][0]
+                dt = user['dob']['date']
+                dat = datetime.strptime(dt[:-5], '%Y-%m-%dT%H:%M:%S') #1958-02-09T05:22:53.242Z
+                print(dat)
+                # if dat.year == year :
+                #     print(user)
+                #     break
 
     def get_user_with_month(self, month: int) -> dict:
         '''return user with month
@@ -25,7 +34,17 @@ class RandomUser:
         Returns:   
             dict: user
         '''
-        pass
+        while True:
+            response = requests.get(self.url)
+            if response.status_code == 200:
+                user = response.json()['results'][0]
+                dt = user['dob']['date']
+                dat = datetime.strptime(dt[:-5], '%Y-%m-%dT%H:%M:%S') #1958-02-09T05:22:53.242Z
+                # print(dat)
+                if dat.month == month:
+                    print(user)
+                    break
+        
 
     def get_user_with_day(self, day: int) -> dict:
         '''return user with day
@@ -51,7 +70,7 @@ class RandomUser:
 
 
 user = RandomUser('https://randomuser.me/api/')
-print(user.get_user_with_year(2990))
+# print(user.get_user_with_year(1980))
 print(user.get_user_with_month(12))
-print(user.get_user_with_day(13))
-print(user.get_user_with_weekday('Monday'))
+# print(user.get_user_with_day(13))
+# print(user.get_user_with_weekday('Monday'))
