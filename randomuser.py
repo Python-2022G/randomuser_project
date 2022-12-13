@@ -55,7 +55,16 @@ class RandomUser:
         Returns:   
             dict: user
         '''
-        pass
+        while True:
+            response = requests.get(self.url)
+            if response.status_code == 200:
+                user = response.json()['results'][0]
+                dt = user['dob']['date']
+                dat = datetime.strptime(dt[:-5], '%Y-%m-%dT%H:%M:%S') 
+                # print(user)
+                if dat.day == day:
+                    print(user)
+                    break
 
     def get_user_with_weekday(self, weekday: int) -> dict:
         '''return user with weekday
@@ -71,6 +80,6 @@ class RandomUser:
 
 user = RandomUser('https://randomuser.me/api/')
 # print(user.get_user_with_year(1980))
-print(user.get_user_with_month(12))
-# print(user.get_user_with_day(13))
+# print(user.get_user_with_month(12))
+print(user.get_user_with_day(13))
 # print(user.get_user_with_weekday('Monday'))
