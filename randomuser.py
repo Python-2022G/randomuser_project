@@ -1,3 +1,4 @@
+from csv import Dialect
 import requests
 import datetime
 
@@ -49,9 +50,39 @@ class RandomUser:
         '''
         pass
 
+    def get_user_by_gender(self, gender: str) -> dict:
+        '''return user by gender
+        
+        Args:
+            gender (str): gender (female, male)
+            
+        Returns:   
+            dict: user
+        '''
+        pass
+
+    def write_users_to_file(self, file_path: str, gender: str, count: int) -> bool:
+        '''write the data of count users whose gender is equal to the given gender to file_path
+
+        Notes:
+            1. user data: {"full_name": first+" "+last, "gender": gender, "age": age}
+            2. you must use get_user_by_gender method
+        
+        Args:
+            file_path (str): file path
+            gender (str): gender (female, male)
+            count (int): how many users
+            
+        Returns:   
+            bool: True if it is ok otherwise False
+        '''
+        pass
+
 
 user = RandomUser('https://randomuser.me/api/')
 print(user.get_user_with_year(2990))
 print(user.get_user_with_month(12))
 print(user.get_user_with_day(13))
 print(user.get_user_with_weekday('Monday'))
+print(user.get_user_by_gender("male"))
+print(user.write_users_to_file('users.json', 'male', 10))
