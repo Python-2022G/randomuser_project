@@ -17,14 +17,11 @@ class RandomUser:
         while True:
             response = requests.get(self.url)
             if response.status_code == 200:
-                data = response.json()['results'][0]
-                data_time = data['dob']['date']
-                answer = datetime.strptime(data_time[:-5], '%Y-%m-%dT%H:%M:%S') #1958-02-09T05:22:53.242Z
+                data = response.json()["results"][0]
+                data_time = data["dob"]["date"]
+                answer = datetime.strptime(data_time[:-5], "%Y-%m-%dT%H:%M:%S") #1958-02-09T05:22:53.242Z
                 print(answer)
-                # if answer.year == year :
-                #      print(data)
-                #      break
-
+                
     def get_user_with_month(self, month: int) -> dict:
         '''return user with month
         
