@@ -1,10 +1,10 @@
 from csv import Dialect
 import requests
-import datetime
+from datetime import*
 
 class RandomUser:
     def __init__(self, url: str) -> None:
-        self.url - url
+        self.url = url
 
     def get_user_with_year(self, year: int) -> dict:
         '''return user with year
@@ -15,8 +15,14 @@ class RandomUser:
         Returns:   
             dict: user
         '''
-        pass
-
+        while True:
+            response = requests.get(self.url)
+            if response.status_code == 200:
+                data = response.json()["results"][0]
+                data_time = data["dob"]["date"]
+                answer = datetime.strptime(data_time[:-5], "%Y-%m-%dT%H:%M:%S") #1958-02-09T05:22:53.242Z
+                print(answer)
+                
     def get_user_with_month(self, month: int) -> dict:
         '''return user with month
         
@@ -79,7 +85,7 @@ class RandomUser:
         pass
 
 
-user = RandomUser('https://randomuser.me/api/')
+user = RandomUser("https://randomuser.me/api/")
 print(user.get_user_with_year(2990))
 print(user.get_user_with_month(12))
 print(user.get_user_with_day(13))
