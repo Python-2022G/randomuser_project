@@ -1,10 +1,9 @@
-from csv import Dialect
 import requests
 import datetime
 
 class RandomUser:
     def __init__(self, url: str) -> None:
-        self.url - url
+        self.url = url
 
     def get_user_with_year(self, year: int) -> dict:
         '''return user with year
