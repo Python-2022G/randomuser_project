@@ -4,7 +4,7 @@ import datetime
 
 class RandomUser:
     def __init__(self, url: str) -> None:
-        self.url - url
+        self.url = url
 
     def get_user_with_year(self, year: int) -> dict:
         '''return user with year
@@ -15,7 +15,15 @@ class RandomUser:
         Returns:   
             dict: user
         '''
-        pass
+        while True:
+            response = requests.get(self.url)
+            if response.status_code == 200:
+                data_user = response.json()["results"][0]
+                data = data_user["dob"]["date"]
+                data_year = datetime.strptime(data[:5], "%Y-%m-%d %H:%M:%S")
+                if data_year.year == year:
+                    return data_user
+
 
     def get_user_with_month(self, month: int) -> dict:
         '''return user with month
