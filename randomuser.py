@@ -1,5 +1,5 @@
 import requests
-import datetime
+from datetime import datetime
 
 class RandomUser:
     def __init__(self, url: str) -> None:
@@ -81,8 +81,7 @@ class RandomUser:
                 dat = datetime.strptime(dt[0:-5], '%Y-%m-%dT%H:%M:%S')
                 # print(user)
                 if dat.weekday == weekday:
-                    print(user)
-                    break
+                    return user
 
     def get_user_by_gender(self, gender: str) -> dict:
         '''return user by gender
@@ -118,13 +117,19 @@ class RandomUser:
         Returns:   
             bool: True if it is ok otherwise False
         '''
-        pass
+        while True:
+            response = requests.get(self.url)
+            if response.status_code == 200:
+                user = response.json()['results'][0]
+                # if user['gender'] == 'male':
+                    # 
+                
 
 
 user = RandomUser('https://randomuser.me/api/')
 # print(user.get_user_with_year(2990))
 # print(user.get_user_with_month(12))
 # print(user.get_user_with_day(13))
-# print(user.get_user_with_weekday('Monday'))
-print(user.get_user_by_gender("male"))
+print(user.get_user_with_weekday(1))
+# print(user.get_user_by_gender("male"))
 # print(user.write_users_to_file('users.json', 'male', 10))
