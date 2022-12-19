@@ -1,6 +1,7 @@
 from csv import Dialect
 import requests
 import datetime
+import json
 
 class RandomUser:
     def __init__(self, url: str) -> None:
@@ -67,7 +68,12 @@ class RandomUser:
         Returns:   
             dict: user
         '''
-        pass
+        while True:
+            response = requests.get(self.url)
+            if response.status_code == 200:
+                data = response["results"][0]
+                if data["gender"] == gender:
+                    return data
 
     def write_users_to_file(self, file_path: str, gender: str, count: int) -> bool:
         '''write the data of count users whose gender is equal to the given gender to file_path
@@ -84,8 +90,17 @@ class RandomUser:
         Returns:   
             bool: True if it is ok otherwise False
         '''
-        pass
+        users = []
+        for  i in range(count):
+            user = self.get_user_by_gender(gender)
+            data = {"full_name": user["name"]["first"] + " " + user["name"]["last"], "gender": gender, "age": user["name"]["age"]}
+            users.append(data)
+        
+        users_str = json.dumps(users, indent=2)
+        with open(file_path, mode = "w") as f:
+            f.write(users_str)
 
+        return True   
 
 user = RandomUser('https://randomuser.me/api/')
 print(user.get_user_with_year(2990))
