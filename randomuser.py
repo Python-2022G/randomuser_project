@@ -62,7 +62,7 @@ class RandomUser:
                 if data_day.day == day:
                     return data_user
 
-    def get_user_with_weekday(self, weekday: int) -> dict:
+    def get_user_with_weekday(self, weekday: str ) -> dict:
         '''return user with weekday
         
         Args:
